@@ -1,0 +1,9 @@
+variable,extremo,movie,valor
+opening,minimo,One Night with the King,4120497
+opening,maximo,Ice Age: The Meltdown,68033544
+us_gross,minimo,Flyboys,13090630
+us_gross,maximo,Happy Feet,198000317
+non_us_gross,minimo,ATL,0
+non_us_gross,maximo,Ice Age: The Meltdown,456235122
+theatres,minimo,Dreamgirls,852
+theatres,maximo,Ice Age: The Meltdown,3964
