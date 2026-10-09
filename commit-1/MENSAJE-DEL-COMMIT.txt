@@ -1,2 +1,0 @@
-﻿feat: regresiones antes de producir y antes del estreno (preguntas 5 a 7)
-Arrastrar: carpeta R

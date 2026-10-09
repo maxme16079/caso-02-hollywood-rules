@@ -1,2 +1,0 @@
-﻿docs: resumen ejecutivo con recomendaciones para Kim Meyer
-Arrastrar: carpeta docs

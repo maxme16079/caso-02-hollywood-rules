@@ -1,2 +1,0 @@
-﻿chore: graficas y tablas de las preguntas 5 a 7
-Arrastrar: carpeta output
