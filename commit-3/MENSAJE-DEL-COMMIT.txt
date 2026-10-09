@@ -1,0 +1,2 @@
+﻿docs: respuestas 5 a 7 sobre secuelas, salas y la regla del 25 %
+Arrastrar: carpeta docs
