@@ -5,9 +5,6 @@
 source("R/00_setup.R")
 
 #### Pregunta 1: minimo, promedio y maximo ####
-# "Calculate the minimum, average, and maximum values of the variables opening
-# gross, total U.S. gross, total non-U.S. gross, and opening theatres. How many
-# of the movies in the data set are comedies and how many movies are R-rated?"
 
 q1 <- hollywood |>
   select(opening, us_gross, non_us_gross, theatres) |>
@@ -18,7 +15,6 @@ q1 <- hollywood |>
             .groups = "drop")
 write_csv(q1, "output/tables/q1_min_promedio_max.csv")
 
-# Cada extremo con el nombre de la pelicula, para poder citarlo en la respuesta
 q1_extremos <- map_dfr(c("opening", "us_gross", "non_us_gross", "theatres"), \(v) {
   bind_rows(
     hollywood |> slice_min(.data[[v]], n = 1, with_ties = FALSE) |>
@@ -35,29 +31,18 @@ q1_conteos <- tibble(
 )
 write_csv(q1_conteos, "output/tables/q1_conteos.csv")
 
-# Composicion por genero y por clasificacion, como contexto
 write_csv(count(hollywood, genre, sort = TRUE), "output/tables/q1_generos.csv")
 write_csv(count(hollywood, mpaa), "output/tables/q1_clasificacion_mpaa.csv")
 
-# Hallazgo: 23 comedias (el genero mas comun) y 15 peliculas R. Las
-# taquillas fuera de EE. UU. van de cero (ATL no se estreno afuera) a 456
-# millones, mucho mas dispersas que las de EE. UU.
-
 #### Pregunta 2: ROI en EE. UU. ####
-# "a. Calculate the U.S. return on investment (ROI) for each movie.
-#  b. Provide a 95 percent confidence interval for the mean U.S. ROI of movies.
-#  c. Show that the mean U.S. ROI is significantly larger than the 12 percent
-#     London cited."
 
 hollywood |>
   select(movie, us_gross, budget, roi_us) |>
   arrange(desc(roi_us)) |>
   write_csv("output/tables/q2a_roi_por_pelicula.csv")
 
-# 2b. Intervalo t: la desviacion poblacional es desconocida y n = 75
 ic_roi <- t.test(hollywood$roi_us, conf.level = 0.95)
 
-# 2c. Prueba de una cola. H0: mu <= 0.12 contra H1: mu > 0.12
 prueba_12 <- t.test(hollywood$roi_us, mu = 0.12, alternative = "greater")
 
 q2 <- tibble(
@@ -89,26 +74,13 @@ g2 <- ggplot(hollywood, aes(x = roi_us)) +
   scale_x_continuous(labels = scales::label_percent()) +
   labs(title = "El ROI promedio en EE. UU. supera el 12 % que cita London",
        subtitle = "Todo el IC del 95 % queda a la derecha del 12 %. Aun así, 29 de las 75 películas no recuperan su presupuesto",
-       x = "ROI en EE. UU. = (taquilla EE. UU. − presupuesto) / presupuesto",
+       x = "ROI en EE. UU. = (taquilla EE. UU. - presupuesto) / presupuesto",
        y = "Películas", caption = fuente) +
   tema_hw
 guardar(g2, "q2_distribucion_roi.png")
 
-# Hallazgo: ROI medio 29,3 %, IC 95 % de 13,5 % a 45,1 %. La prueba de una
-# cola contra 12 % da t = 2,18 con p = 0,016, asi que se rechaza H0 al 5 %. La
-# mediana (16,7 %) es menor que la media: unos pocos exitos jalan el promedio,
-# y 29 de las 75 peliculas no recuperan su presupuesto solo con la taquilla
-# de EE. UU.
-
 #### Pregunta 3: comedias contra el resto ####
-# "a. Is there a statistically significant difference between the total U.S.
-#     gross of comedies and non-comedy movies?
-#  b. Calculate additionally the difference of U.S. ROIs from movies of the
-#     comedy genre and of other movie genres. Is there a statistically
-#     significant difference between the U.S. ROIs?"
 
-# Prueba t de Welch: no supone varianzas iguales entre los grupos. Como control
-# se reporta tambien la version con varianza combinada
 comparar <- function(variable, grupo, etiqueta) {
   f <- reformulate(grupo, variable)
   w <- t.test(f, data = hollywood)
@@ -132,7 +104,6 @@ q3 <- bind_rows(
 )
 write_csv(q3, "output/tables/q3_comedia_vs_resto.csv")
 
-# Grafica de puntos con la media de cada grupo, una faceta por variable
 datos_g3 <- hollywood |>
   mutate(grupo = if_else(comedy == 1, "Comedias (23)", "Otros géneros (52)")) |>
   select(grupo, `Taquilla EE. UU. (USD M)` = us_gross, `Presupuesto (USD M)` = budget,
@@ -155,18 +126,7 @@ g3 <- ggplot(datos_g3, aes(x = grupo, y = value, color = grupo)) +
   tema_hw
 guardar(g3, "q3_comedia_vs_resto.png", ancho = 9, alto = 4.8)
 
-# Hallazgo: en taquilla la comedia promedia 68,7 M contra 55,6 M del resto,
-# diferencia de 13,2 M que no es significativa (p = 0,18). En ROI la comedia
-# rinde 54,0 % contra 18,4 %, y esa diferencia si es significativa al 5 %
-# (p = 0,047). La sospecha de Griffith de que el mayor ingreso venia de una
-# mayor inversion no se cumple: las comedias cuestan casi lo mismo (47,1 M
-# contra 50,2 M, p = 0,59). Lo que cambia es la escala. Dividir por el
-# presupuesto quita la dispersion que viene del tamano de la produccion, y con
-# menos ruido la misma ventaja de las comedias se vuelve detectable
-
 #### Pregunta 4: peliculas R contra el resto ####
-# "a. Is there a statistically significant difference between the total U.S.
-#     gross of R-rated movies and movies with other ratings?"
 
 q4 <- bind_rows(
   comparar("us_gross", "r_rated", "R vs resto"),
@@ -188,10 +148,5 @@ g4 <- hollywood |>
        x = NULL, y = "Taquilla total en EE. UU.", caption = fuente) +
   tema_hw
 guardar(g4, "q4_r_vs_resto.png", ancho = 7, alto = 4.5)
-
-# Hallazgo: la creencia no se sostiene. Las R recaudan en promedio 7,9 M menos
-# que el resto y la diferencia no es significativa (p = 0,40). Con 15 R contra
-# 60 el poder de la prueba es limitado, asi que la conclusion es que no hay
-# evidencia de que rindan mejor, no que rindan igual
 
 cat("Preguntas 1 a 4 listas\n")

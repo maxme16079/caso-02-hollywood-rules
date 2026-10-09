@@ -1,17 +1,9 @@
-# R
 .Rhistory
 .RData
 .Rproj.user/
 *.Rproj
 .Rapp.history
-
-# Excel temporales
 ~$*
-
-# Sistema
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# Documentos intermedios de Word, en el repo va el PDF
-output/entrega/*.docx
