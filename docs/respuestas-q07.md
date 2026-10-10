@@ -38,7 +38,7 @@ dólares.
 
 **b.** Si el estreno fuera el 25 % del total, la taquilla total sería el estreno
 dividido entre 0,25. Eso es lo mismo que 4 veces el estreno. La pendiente
-tendría que ser **4** y el intercepto tendría que ser cero.
+tendría que ser 4 y el intercepto tendría que ser cero.
 
 La pendiente estimada es 3,12 y todo su intervalo del 95 % queda por debajo de
 4. En la gráfica la línea roja de la regla pasa por encima de la mayoría de las
@@ -50,7 +50,7 @@ regla.
 
 **c a f.** Se omiten por indicación del profesor.
 
-**g.** El R² de la regresión es **0,737**. El 73,7 % de la variación de la
+**g.** El R² de la regresión es 0,737. El 73,7 % de la variación de la
 taquilla total en EE. UU. se explica por la variación de la taquilla del fin de
 semana de estreno.
 
