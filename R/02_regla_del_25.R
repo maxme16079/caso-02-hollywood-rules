@@ -30,7 +30,7 @@ g7 <- ggplot(hollywood, aes(x = opening, y = us_gross)) +
               linewidth = 0.9) +
   annotate("text", x = 3.0e7, y = 4 * 3.0e7, label = "Regla del 25 %: total = 4 x estreno",
            color = rojo, hjust = 1.15, size = 3.3) +
-  annotate("text", x = 6.8e7, y = coef(m7)[1] + coef(m7)[2] * 6.8e7 - 4e7,
+  annotate("text", x = 6.8e7, y = coef(m7)[1] + coef(m7)[2] * 6.8e7 - 7e7,
            label = "Recta estimada: pendiente 3,12", color = azul,
            hjust = 1, vjust = 2, size = 3.3) +
   scale_x_continuous(labels = millones) +
