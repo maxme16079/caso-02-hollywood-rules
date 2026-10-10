@@ -21,26 +21,6 @@ hollywood <- read_excel(ruta, sheet = "Exhibit 1") |>
 
 stopifnot(nrow(hollywood) == 75, !anyNA(hollywood))
 
-vars_preproduccion <- c("budget", "comedy", "r_rated", "sequel", "known_story")
-vars_estreno <- c("summer", "holiday", "christmas", "theatres")
-vars_post_estreno <- c("opening", "critics")
-
-eliminacion_atras <- function(datos, respuesta, candidatas, alfa = 0.10) {
-  vars <- candidatas
-  pasos <- tibble(paso = integer(), variable_quitada = character(),
-                  p_valor = numeric())
-  repeat {
-    modelo <- lm(reformulate(vars, respuesta), data = datos)
-    p <- summary(modelo)$coefficients[-1, 4, drop = FALSE]
-    peor <- which.max(p[, 1])
-    if (p[peor, 1] <= alfa) break
-    pasos <- add_row(pasos, paso = nrow(pasos) + 1L,
-                     variable_quitada = rownames(p)[peor], p_valor = p[peor, 1])
-    vars <- setdiff(vars, rownames(p)[peor])
-  }
-  list(modelo = modelo, pasos = pasos)
-}
-
 tabla_coef <- function(modelo) {
   ic <- confint(modelo)
   summary(modelo)$coefficients |>
