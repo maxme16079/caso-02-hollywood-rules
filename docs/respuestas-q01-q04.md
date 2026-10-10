@@ -7,14 +7,13 @@
 **Autor de esta sección:** Maximo van Fulpen
 **Fecha:** 9 de octubre de 2026
 
-Cálculos en `R/01_descriptivos_y_pruebas.R`. La carga de datos y las variables
-derivadas (la dummy de comedia y el ROI) están en `R/00_setup.R`. Los datos son
-las 75 películas de 2006 con presupuesto conocido entre USD 20 y 100 millones,
-sin datos faltantes.
+Los cálculos están en `R/01_descriptivos_y_pruebas.R` y la carga de datos en
+`R/00_setup.R`. Los datos son 75 películas de 2006 con presupuesto entre USD 20
+y 100 millones y sin datos faltantes.
 
 ## 1) Panorama inicial de los datos
 
-**Tabla 1.** Mínimo, promedio y máximo de las variables principales (75 películas)
+**Tabla 2.** Mínimo, promedio y máximo de las variables principales (75 películas)
 
 | Variable | Mínimo | Promedio | Máximo |
 |---|---|---|---|
@@ -23,33 +22,34 @@ sin datos faltantes.
 | Taquilla fuera de EE. UU. (USD) | 0 | 59.560.983 | 456.235.122 |
 | Salas en el estreno | 852 | 2.766 | 3.964 |
 
-El estreno más flojo fue *One Night with the King* y el más fuerte *Ice Age: The
-Meltdown*, que también tuvo la mayor taquilla internacional y el mayor número de
-salas. *Happy Feet* fue la de mayor taquilla en EE. UU. y *Flyboys* la menor. El
-mínimo de cero fuera de EE. UU. es *ATL*, que no se estrenó en el exterior.
+El estreno más flojo fue *One Night with the King* y el más fuerte fue *Ice
+Age: The Meltdown*. Esa misma película tuvo la mayor taquilla internacional y
+el mayor número de salas. *Happy Feet* fue la de mayor taquilla en EE. UU. y
+*Flyboys* la de menor. El cero fuera de EE. UU. corresponde a *ATL*, que no se
+estrenó en el exterior.
 
-La taquilla internacional promedia lo mismo que la de EE. UU. (59,6 millones
-contra 59,6 millones) pero su máximo es más del doble. Es la fuente de ingresos
-más dispersa, lo que coincide con lo que dice el caso de *Troy* o *Alexander*.
+La taquilla internacional tiene el mismo promedio que la de EE. UU. con 59,6
+millones cada una. Su máximo es más del doble, así que es la fuente de ingresos
+más dispersa. Eso coincide con lo que cuenta el caso de *Troy* y *Alexander*.
 
-En los datos hay 23 comedias y 15 películas calificadas R. La comedia es el
-género más frecuente, seguida del drama con 19. La clasificación más común es
+Hay 23 comedias y 15 películas calificadas R. La comedia es el género más
+frecuente y le sigue el drama con 19 películas. La clasificación más común es
 PG-13 con 37 películas.
 
 ## 2) ¿Rinde el negocio un 12 % al año?
 
-**a.** El ROI en EE. UU. de cada película se calculó como
-(taquilla total EE. UU. - presupuesto) / presupuesto. La tabla completa con las
-75 películas está en el anexo (Tabla A1). El mejor es *The Devil Wears Prada* con 256 %, y el
-peor *Arthur and the Invisibles* con -82 %.
+**a.** El ROI en EE. UU. de cada película es la taquilla total en EE. UU. menos
+el presupuesto, dividido entre el presupuesto. La tabla con las 75 películas
+está en el anexo (Tabla A1). El mejor ROI es el de *The Devil Wears Prada* con
+256 %. El peor es el de *Arthur and the Invisibles*, que perdió el 82 % de su
+presupuesto.
 
-**b.** El ROI medio es 29,3 % con desviación estándar de 68,7 %. Como la
-desviación poblacional no se conoce, el intervalo usa la t de Student con 74
-grados de libertad:
+**b.** El ROI medio es 29,3 % con una desviación estándar de 68,7 %. La
+desviación de la población no se conoce, así que el intervalo usa la t de
+Student con 74 grados de libertad. El intervalo del 95 % para el ROI medio va
+de 13,5 % a 45,1 %.
 
-IC del 95 % para el ROI medio: de 13,5 % a 45,1 %.
-
-**Tabla 2.** ROI en EE. UU. de las 75 películas
+**Tabla 3.** ROI en EE. UU. de las 75 películas
 
 | Medida | Valor |
 |---|---|
@@ -59,26 +59,27 @@ IC del 95 % para el ROI medio: de 13,5 % a 45,1 %.
 | Error estándar de la media | 7,9 % |
 | IC 95 % de la media | 13,5 % a 45,1 % |
 | t contra 12 % (74 gl) | 2,18 |
-| p-valor de una cola | 0,016 |
+| p valor de una cola | 0,016 |
 | Películas con ROI negativo | 29 de 75 |
 
-**c.** Se plantea una prueba de una cola, porque lo que se quiere mostrar es que
-el ROI supera el 12 %:
+**c.** El caso pide mostrar que el ROI es mayor que el 12 %, así que la prueba
+es de una cola. La hipótesis nula es que el ROI medio es menor o igual a 0,12 y
+la alternativa es que es mayor.
 
-- H0: μ ≤ 0,12
-- H1: μ > 0,12
+El estadístico t es 2,18 y el p valor es 0,016. Se rechaza la hipótesis nula al
+5 %. El ROI medio en EE. UU. es significativamente mayor que el 12 % que cita
+Michael London. El intervalo de la parte b lleva a la misma conclusión porque
+deja el 12 % por fuera.
 
-t = (0,2929 - 0,12) / 0,0794 = 2,18, con p = 0,016. Se rechaza H0 al 5 %:
-el ROI medio en EE. UU. es significativamente mayor que el 12 % de Michael London.
-Lo confirma el intervalo de la parte (b), que deja el 12 % por fuera.
+Hay dos advertencias para Meyer. La mediana es 16,7 % y está muy por debajo de
+la media, porque unos pocos éxitos suben el promedio. Además 29 de las 75
+películas no recuperan su presupuesto solo con la taquilla de EE. UU.
 
-Dos advertencias para Meyer. Primero, la mediana es 16,7 %, bastante menor que la
-media, porque unos pocos éxitos jalan el promedio. Segundo, 29 de las 75
-películas no recuperan su presupuesto solo con la taquilla de EE. UU. El
-rendimiento promedio es bueno, pero se gana con un portafolio, no con una
-película. Es justamente el argumento de los *slate financing deals*. Además el
-ROI ignora la publicidad, que según el caso promedia USD 34,5 millones, y el
-reparto de la taquilla con los exhibidores, así que sobrestima el retorno real.
+El rendimiento promedio es bueno pero se logra con un portafolio y no con una
+película suelta. Ese es el argumento de los acuerdos de slate financing. El ROI
+tampoco descuenta la publicidad, que según el caso promedia USD 34,5 millones,
+ni la parte de la taquilla que se queda el exhibidor. Por eso sobrestima el
+retorno real.
 
 ![](output/figures/q2_distribucion_roi.png)
 
@@ -90,31 +91,32 @@ Se usó la prueba t de Welch para dos muestras independientes, que no supone
 varianzas iguales. La versión con varianza combinada lleva a las mismas
 conclusiones.
 
-**Tabla 3.** Comedias contra el resto de géneros (prueba t de Welch)
+**Tabla 4.** Comedias contra el resto de géneros (prueba t de Welch)
 
-| Variable | Comedias (23) | Otros géneros (52) | Diferencia | p-valor |
+| Variable | Comedias (23) | Otros géneros (52) | Diferencia | p valor |
 |---|---|---|---|---|
 | Taquilla EE. UU. (USD M) | 68,7 | 55,6 | 13,2 | 0,176 |
 | ROI EE. UU. | 54,0 % | 18,4 % | 35,7 pp | 0,047 |
 | Presupuesto (USD M) | 47,1 | 50,2 | -3,1 | 0,592 |
 
-**a.** H0: la taquilla media de las comedias es igual a la del resto. Las
-comedias recaudan en promedio 13,2 millones más, pero con p = 0,176 no se puede
-rechazar H0. El intervalo del 95 % para la diferencia va de -6,1 a 32,4
-millones e incluye el cero. No hay evidencia de que la comedia recaude distinto.
+**a.** La hipótesis nula es que la taquilla media de las comedias es igual a la
+del resto. Las comedias recaudan en promedio 13,2 millones más, pero el p valor
+es 0,176 y no se rechaza la hipótesis nula. El intervalo del 95 % para la
+diferencia incluye el cero. No hay evidencia de que la comedia recaude distinto.
 
-**b.** En ROI la historia cambia. Las comedias rinden 54,0 % contra 18,4 % del
-resto, una diferencia de 35,7 puntos porcentuales con p = 0,047. La diferencia
-es significativa al 5 % (no al 1 %). El intervalo del 95 % va de 0,4 a 70,9
+**b.** En ROI el resultado cambia. Las comedias rinden 54,0 % y el resto 18,4 %.
+La diferencia es de 35,7 puntos porcentuales con un p valor de 0,047, así que
+es significativa al 5 % pero no al 1 %. El intervalo del 95 % va de 0,4 a 70,9
 puntos.
 
-La sospecha de Griffith era que el mayor ingreso venía con una mayor inversión.
-Los datos no la apoyan: las comedias cuestan casi lo mismo que el resto (47,1
-contra 50,2 millones, p = 0,59). Lo que pasa es que el ROI divide por el
-presupuesto y así elimina la parte de la variación de la taquilla que viene del
-tamaño de cada producción. Con menos ruido, la misma ventaja de la comedia se
-vuelve detectable. Para un inversionista que pone plata por película, la
-variable relevante es el ROI, y ahí la comedia sale ganando.
+Griffith sospechaba que las comedias recaudaban más porque costaban más. Los
+datos no apoyan esa idea, porque su presupuesto es casi igual al del resto con
+47,1 contra 50,2 millones y un p valor de 0,59.
+
+El ROI divide la taquilla entre el presupuesto y así quita la variación que
+viene del tamaño de cada producción. Con menos ruido la ventaja de la comedia se
+vuelve detectable. Para un inversionista que pone dinero en cada película la
+variable que importa es el ROI, y ahí la comedia sale ganando.
 
 ![](output/figures/q3_comedia_vs_resto.png)
 
@@ -122,25 +124,26 @@ variable relevante es el ROI, y ahí la comedia sale ganando.
 
 ## 4) Películas R contra el resto
 
-**a.** H0: la taquilla media de las películas R es igual a la del resto.
+**Tabla 5.** Películas R contra el resto (prueba t de Welch)
 
-**Tabla 4.** Películas R contra el resto (prueba t de Welch)
-
-| Variable | R (15) | Otras (60) | Diferencia | p-valor |
+| Variable | R (15) | Otras (60) | Diferencia | p valor |
 |---|---|---|---|---|
 | Taquilla EE. UU. (USD M) | 53,3 | 61,2 | -7,9 | 0,398 |
 | ROI EE. UU. | 20,9 % | 31,4 % | -10,5 pp | 0,570 |
 
-Las 15 películas R recaudan en promedio 53,3 millones en EE. UU. y las 60 de
-otras clasificaciones 61,2 millones. La diferencia de -7,9 millones tiene
-p = 0,398 (t de Welch), así que no se rechaza H0. Tampoco hay diferencia en
-ROI (20,9 % contra 31,4 %, p = 0,57).
+**a.** La hipótesis nula es que la taquilla media de las películas R es igual a
+la del resto. Las 15 películas R recaudan en promedio 53,3 millones en EE. UU. y
+las otras 60 recaudan 61,2 millones. La diferencia es de 7,9 millones a favor
+del resto con un p valor de 0,398, así que no se rechaza la hipótesis nula.
+Tampoco hay diferencia en ROI, con 20,9 % contra 31,4 % y un p valor de 0,57.
 
-La creencia de que las R rinden mejor no se sostiene. Si algo, el signo va al
-revés, en línea con lo que el caso cuenta del mercado en 2006, donde las PG y
-PG-13 dominaron las taquillas más altas. Con solo 15 películas R la prueba tiene
-poca potencia, así que la conclusión correcta es que no hay evidencia de que
-las R rindan mejor, no que rindan igual.
+La creencia de que las películas R rinden mejor no se sostiene. La diferencia
+incluso va en la dirección contraria, lo que coincide con el caso cuando cuenta
+que en 2006 las películas PG y PG-13 dominaron las taquillas más altas.
+
+Con solo 15 películas R la prueba tiene poca potencia. Por eso la conclusión
+correcta es que no hay evidencia de que las películas R rindan mejor, y no que
+rindan igual.
 
 ![](output/figures/q4_r_vs_resto.png)
 

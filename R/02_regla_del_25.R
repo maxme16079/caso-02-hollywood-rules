@@ -1,4 +1,4 @@
-# Caso 2 - Hollywood Rules
+# Caso 2. Hollywood Rules
 # Pregunta 7 (literales a, b y g): regresion simple de la taquilla total en
 # EE. UU. sobre la taquilla del fin de semana de estreno y la regla del 25 %
 

@@ -1,4 +1,4 @@
-# Caso 2 - Hollywood Rules
+# Caso 2. Hollywood Rules
 # Carga de datos, variables derivadas y funciones comunes a todo el caso
 # Autor: Maximo van Fulpen
 

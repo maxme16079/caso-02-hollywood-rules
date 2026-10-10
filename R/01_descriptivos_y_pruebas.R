@@ -1,4 +1,4 @@
-# Caso 2 - Hollywood Rules
+# Caso 2. Hollywood Rules
 # Preguntas 1 a 4: panorama de los datos, ROI y pruebas de hipotesis
 # Autor: Maximo van Fulpen
 
@@ -73,8 +73,8 @@ g2 <- ggplot(hollywood, aes(x = roi_us)) +
            size = 3.3, label = "12 % de\nMichael London") +
   scale_x_continuous(labels = scales::label_percent()) +
   labs(title = "El ROI promedio en EE. UU. supera el 12 % que cita London",
-       subtitle = "Todo el IC del 95 % queda a la derecha del 12 %. Aun así, 29 de las 75 películas no recuperan su presupuesto",
-       x = "ROI en EE. UU. = (taquilla EE. UU. - presupuesto) / presupuesto",
+       subtitle = "Todo el IC del 95 % queda a la derecha del 12 %. Aun así 29 de las 75 películas no recuperan su presupuesto",
+       x = "ROI en EE. UU. (taquilla en EE. UU. sobre presupuesto, menos 1)",
        y = "Películas", caption = fuente) +
   tema_hw
 guardar(g2, "q2_distribucion_roi.png")
@@ -122,7 +122,7 @@ g3 <- ggplot(datos_g3, aes(x = grupo, y = value, color = grupo)) +
   scale_color_manual(values = c("Comedias (23)" = rojo, "Otros géneros (52)" = "grey55"),
                      guide = "none") +
   labs(title = "Por cada dólar invertido, las comedias rinden más que el resto",
-       subtitle = "Presupuestos parecidos. Taquilla: diferencia no significativa (p = 0,18). ROI: significativa al 5 % (p = 0,047)",
+       subtitle = "Presupuestos parecidos. La taquilla no difiere (p = 0,18) y el ROI sí difiere al 5 % (p = 0,047)",
        x = NULL, y = NULL, caption = fuente) +
   tema_hw
 guardar(g3, "q3_comedia_vs_resto.png", ancho = 9, alto = 4.8)
