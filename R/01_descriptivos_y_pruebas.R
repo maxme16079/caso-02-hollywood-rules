@@ -115,7 +115,8 @@ datos_g3 <- hollywood |>
                                         "Presupuesto (USD M)", "ROI EE. UU. (%)")))
 
 g3 <- ggplot(datos_g3, aes(x = grupo, y = value, color = grupo)) +
-  geom_jitter(width = 0.15, alpha = 0.55, size = 1.6) +
+  geom_point(position = position_jitter(width = 0.15, height = 0, seed = 2006),
+             alpha = 0.55, size = 1.6) +
   stat_summary(fun = mean, geom = "crossbar", width = 0.5, linewidth = 0.5) +
   facet_wrap(~ name, scales = "free_y") +
   scale_color_manual(values = c("Comedias (23)" = rojo, "Otros géneros (52)" = "grey55"),
@@ -137,7 +138,8 @@ write_csv(q4, "output/tables/q4_r_vs_resto.csv")
 g4 <- hollywood |>
   mutate(grupo = if_else(r_rated == 1, "Calificadas R (15)", "Otras clasificaciones (60)")) |>
   ggplot(aes(x = grupo, y = us_gross, color = grupo)) +
-  geom_jitter(width = 0.15, alpha = 0.6, size = 1.8) +
+  geom_point(position = position_jitter(width = 0.15, height = 0, seed = 2006),
+             alpha = 0.6, size = 1.8) +
   stat_summary(fun = mean, geom = "crossbar", width = 0.5, linewidth = 0.5) +
   scale_color_manual(values = c("Calificadas R (15)" = rojo,
                                 "Otras clasificaciones (60)" = "grey55"),
