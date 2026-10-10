@@ -1,11 +1,11 @@
 # Caso 2: Hollywood Rules
-## Parte 2, primera sección. Respuestas a las preguntas 1 a 4
+## Respuestas a las preguntas 1 a 4
 
 **Curso:** Analítica de los Negocios (BA-2630)
 **Profesor:** Juan Nicolás Velásquez Rey
 **Equipo:** Maximo van Fulpen, Helen Sofía Castiblanco, Camilo Hernández
 **Autor de esta sección:** Maximo van Fulpen
-**Fecha:** 7 de octubre de 2026
+**Fecha:** 9 de octubre de 2026
 
 Cálculos en `R/01_descriptivos_y_pruebas.R`. La carga de datos y las variables
 derivadas (la dummy de comedia y el ROI) están en `R/00_setup.R`. Los datos son
@@ -13,6 +13,8 @@ las 75 películas de 2006 con presupuesto conocido entre USD 20 y 100 millones,
 sin datos faltantes.
 
 ## 1) Panorama inicial de los datos
+
+**Tabla 1.** Mínimo, promedio y máximo de las variables principales (75 películas)
 
 | Variable | Mínimo | Promedio | Máximo |
 |---|---|---|---|
@@ -37,8 +39,8 @@ PG-13 con 37 películas.
 ## 2) ¿Rinde el negocio un 12 % al año?
 
 **a.** El ROI en EE. UU. de cada película se calculó como
-(taquilla total EE. UU. - presupuesto) / presupuesto. La tabla completa está en
-`q2a_roi_por_pelicula.csv`. El mejor es *The Devil Wears Prada* con 256 %, y el
+(taquilla total EE. UU. - presupuesto) / presupuesto. La tabla completa con las
+75 películas está en el anexo (Tabla A1). El mejor es *The Devil Wears Prada* con 256 %, y el
 peor *Arthur and the Invisibles* con -82 %.
 
 **b.** El ROI medio es 29,3 % con desviación estándar de 68,7 %. Como la
@@ -46,6 +48,19 @@ desviación poblacional no se conoce, el intervalo usa la t de Student con 74
 grados de libertad:
 
 IC del 95 % para el ROI medio: de 13,5 % a 45,1 %.
+
+**Tabla 2.** ROI en EE. UU. de las 75 películas
+
+| Medida | Valor |
+|---|---|
+| ROI medio | 29,3 % |
+| ROI mediano | 16,7 % |
+| Desviación estándar | 68,7 % |
+| Error estándar de la media | 7,9 % |
+| IC 95 % de la media | 13,5 % a 45,1 % |
+| t contra 12 % (74 gl) | 2,18 |
+| p-valor de una cola | 0,016 |
+| Películas con ROI negativo | 29 de 75 |
 
 **c.** Se plantea una prueba de una cola, porque lo que se quiere mostrar es que
 el ROI supera el 12 %:
@@ -67,11 +82,15 @@ reparto de la taquilla con los exhibidores, así que sobrestima el retorno real.
 
 ![](output/figures/q2_distribucion_roi.png)
 
+**Figura 1.** Distribución del ROI en EE. UU. con el 12 % de referencia
+
 ## 3) Comedias contra el resto de géneros
 
 Se usó la prueba t de Welch para dos muestras independientes, que no supone
 varianzas iguales. La versión con varianza combinada lleva a las mismas
-conclusiones (está en la tabla).
+conclusiones.
+
+**Tabla 3.** Comedias contra el resto de géneros (prueba t de Welch)
 
 | Variable | Comedias (23) | Otros géneros (52) | Diferencia | p-valor |
 |---|---|---|---|---|
@@ -99,9 +118,18 @@ variable relevante es el ROI, y ahí la comedia sale ganando.
 
 ![](output/figures/q3_comedia_vs_resto.png)
 
+**Figura 2.** Taquilla, presupuesto y ROI de las comedias frente al resto. La barra es la media
+
 ## 4) Películas R contra el resto
 
 **a.** H0: la taquilla media de las películas R es igual a la del resto.
+
+**Tabla 4.** Películas R contra el resto (prueba t de Welch)
+
+| Variable | R (15) | Otras (60) | Diferencia | p-valor |
+|---|---|---|---|---|
+| Taquilla EE. UU. (USD M) | 53,3 | 61,2 | -7,9 | 0,398 |
+| ROI EE. UU. | 20,9 % | 31,4 % | -10,5 pp | 0,570 |
 
 Las 15 películas R recaudan en promedio 53,3 millones en EE. UU. y las 60 de
 otras clasificaciones 61,2 millones. La diferencia de -7,9 millones tiene
@@ -115,3 +143,5 @@ poca potencia, así que la conclusión correcta es que no hay evidencia de que
 las R rindan mejor, no que rindan igual.
 
 ![](output/figures/q4_r_vs_resto.png)
+
+**Figura 3.** Taquilla en EE. UU. de las películas R frente al resto
